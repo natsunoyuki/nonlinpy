@@ -87,7 +87,7 @@ def calculate_m(D, G):
     m = sparse_representation(D, G, m)   
     return m
 
-def make_G(X, degree = 2):
+def make_G(X, degree):
     """
     Make inversion kernel G using the raw data matrix X.
     We tailor the length in order to account for the lost of 2 rows at the start
@@ -104,7 +104,7 @@ def make_G(X, degree = 2):
     G = polyfeats.fit_transform(G)
     return G  
     
-def nonlinear_inversion(X, dt):
+def nonlinear_inversion(X, dt, degree):
     """
     This is the main driver function to perform linear inversion of nonlinear signals
     to obtain the ODE model.
@@ -121,7 +121,7 @@ def nonlinear_inversion(X, dt):
     # Perform the order differentiation
     D = make_dx4(X, dt)
     # Build the kernel for linear inversion/regression
-    G = make_G(X)
+    G = make_G(X, degree)
     # Perform the linear inversion, as well as the sparse representation
     m = calculate_m(D, G)  
     
@@ -150,7 +150,7 @@ def demo():
     a = a[-int(len(a) / 10):]
     
     # Perform the nonlinear signal inversion for the ODE parameters!
-    D, G, m, P = nonlinear_inversion(a, dt)
+    D, G, m, P = nonlinear_inversion(a, dt, 2)
     print("Estimated nonlinear ODE parameters:")
     print(m)
     
