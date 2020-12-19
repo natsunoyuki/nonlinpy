@@ -8,10 +8,13 @@ def dx4(x, dt):
     This function calulates 1st order central derivative 
     with 4th order errors, hence the name dx4
     Inputs:
-    x: array to be differentiated
-    dt: time step size
+    x: np.array
+        array to be differentiated
+    dt: float
+        time step size
     Outputs:
-    dx: array of differentiated values of x
+    dx: np.array
+        array of differentiated values of x
     """
     dx = np.zeros(len(x) - 4)
     for i in range(2, len(x) - 2):
@@ -23,11 +26,14 @@ def make_dx4(X, dt):
     This is the wrapper function to apply dx4() to a matrix instead of an array
     of nonlinear signals
     Input:
-    X: matrix (multi-dimensional array) to be differentiated. 
-       Rows: time steps and columns: features
-    dt: time step size
+    X: np.array
+        matrix (multi-dimensional array) to be differentiated. 
+        Rows: time steps and columns: features
+    dt: float
+        time step size
     Output:
-    dX: matrix (multi-dimensional array) of differentiated X
+    dX: np.array
+        matrix (multi-dimensional array) of differentiated X
     """
     n, m = np.shape(X)
     dX = np.zeros([n-4, m])
@@ -43,11 +49,15 @@ def least_squares(d, G):
     |m_est> = Gg |d>
     Minimize the error E = <e|e> where |e> = |d> - G|m>
     Gg = [G.T G]**-1 G.T
+    
     Input:
-    d: inversion data matrix
-    G: inversion kernel matrix
+    d: np.array
+        inversion data matrix
+    G: np.array
+        inversion kernel matrix
     Output:
-    m: inversion model matrix
+    m: np.array
+        inversion model matrix
     """    
     m = np.dot(np.linalg.inv(np.dot(G.T, G)), G.T)
     m = np.dot(m, d)
@@ -57,13 +67,19 @@ def sparse_representation(D, G, m, la = 0.1):
     """
     Sparse Representation Algorithm (Brunton et al. PNAS 2016) to remove 
     extremely small model parameters.
+    
     Input:
-    D: inversion data matrix
-    G: inversion kernel matrix   
-    m: inversion model matrix
-    la: threshold limit for expansion coefficient values. 0.1 by default
+    D: np.array
+        inversion data matrix
+    G: np.array
+        inversion kernel matrix   
+    m: np.array
+        inversion model matrix
+    la: float
+        threshold limit for expansion coefficient values. 0.1 by default
     Output:
-    m: modified inversion model matrix
+    m: np.array
+        modified inversion model matrix
     """
     for k in range(10):
         smallinds = abs(m) < la
@@ -78,10 +94,13 @@ def calculate_m(D, G):
     """
     Perform the linear inversion, as well as calculate the sparse representation of m.
     Input:
-    D: inversion data matrix
-    G: inversion kernel matrix
+    D: np.array
+        inversion data matrix
+    G: np.array
+        inversion kernel matrix
     Output:
-    m: inversion model matrix
+    m: np.array
+        inversion model matrix
     """
     m = least_squares(D, G)
     m = sparse_representation(D, G, m)   
@@ -109,13 +128,21 @@ def nonlinear_inversion(X, dt, degree):
     This is the main driver function to perform linear inversion of nonlinear signals
     to obtain the ODE model.
     Inputs:
-    X: the nonlinear signal to be analyzed.
-    dt: time step size
+    X: np.array
+        the nonlinear signal to be analyzed.
+    dt: float
+        time step size
+    degree: int
+        the degree of the inversion kernel matrix
     Outputs:
-    D: inversion data matrix
-    G: inversion kernel matrix
-    m: inversion model matrix
-    P: inversion predictions of D
+    D: np.array
+        inversion data matrix
+    G: np.array
+        inversion kernel matrix
+    m: np.array
+        inversion model matrix
+    P: np.array
+        inversion predictions of D
     """
     # First of all perform linear inversion of the nonlinear signal
     # Perform the order differentiation
