@@ -12,9 +12,13 @@ import time
 def MultMoment(tauI,mulist,xlist):
     """
     A M Albano, A Passamante, M E Farrell, Physica D 54 (1991) 85-97
-    tauI: time delay step
-    mul: Albano et al. mu value list
-    xlist: nonlinear time series array    
+    
+    tauI: int
+        time delay step
+    mul: list
+        Albano et al. mu value list
+    xlist: np.array
+        nonlinear time series array    
     """
     avx = np.mean(xlist) #mean of data
     xdouble = np.power(xlist, 2) #data squared
@@ -263,4 +267,3 @@ def high_correl_demonstration():
     plt.plot(T, T * 0 + 1 - 1 / np.exp(1),'r-.')
     plt.plot(T,T * 0,'r-.')
     plt.show()
-
