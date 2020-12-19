@@ -4,6 +4,20 @@ from scipy import integrate
 def logistic_map_attractor(N = 5000, A = 4, data_0 = np.pi / 10.0):
     """
     Create the chaotic logistic map attractor
+    
+    Inputs
+    ------
+    N: int
+        number of points to generate
+    A: float
+        Logistic map factor
+    data_0: float
+        initial conditions
+        
+    Returns
+    -------
+    data: np.array
+        1D logistic map values
     """
     data = np.zeros(N)
     data[0] = data_0
@@ -16,6 +30,11 @@ def logistic_map_attractor(N = 5000, A = 4, data_0 = np.pi / 10.0):
 def rossler_attractor():
     """
     This function creates the Rossler attractor
+    
+    Returns:
+    --------
+    a: np.array
+        3D Rossler attractor values
     """    
     def xdot_fun(x, t):
         a = 0.2
@@ -32,12 +51,16 @@ def rossler_attractor():
     x0 = np.array([10, 0, 0])
     a = integrate.odeint(xdot_fun, x0, t)
     
-    return a    
-
+    return a
 
 def rossler_attractor_x():
     """
-    This function creates the X axis of the Rossler attractor
+    This function creates the x axis of the Rossler attractor
+    
+    Returns
+    -------
+    X: np.array
+        x axis values of the Rossler attractor
     """
 
     a = rossler_attractor()    
