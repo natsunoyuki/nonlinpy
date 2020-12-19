@@ -7,6 +7,13 @@ from scipy import linalg
 def mean_attractor_radius(nmax, recsp):
     """
     Calculates the mean reconstructed attractor radius
+    
+    Inputs
+    ------
+    nmax: int
+        number of elements to use
+    recsp: np.array
+        reconstructed attractor
     """
     D = np.zeros(nmax)
     
@@ -22,12 +29,23 @@ def MD_neighbour(i, tahead, recsp):
     each column in recsp must correspond to one state, each row must
     correspond to one time step!!!!!!!!!
     Note that in the output;
-    column 1 of the output corresponds to distances
-    column 2 of the output corresponds to index of distances
+    column 0 of the output corresponds to distances
+    column 1 of the output corresponds to index of distances
     
-    i: Euclidean distance in N dimensional reconstructed space 
-    tahead: number of timesteps ahead
-    recsp: the reconstructed attractor        
+    Inputs
+    ------
+    i: int
+        Euclidean distance in N dimensional reconstructed space 
+    tahead: int
+        number of timesteps ahead
+    recsp: np.array
+        the reconstructed attractor   
+        
+    Returns
+    -------
+    Q1: np.array
+        Q1[:,0]: nearest neighbour distances
+        Q1[:,1]: index of the distances in Q1[:,0]
     """
     nmax = len(recsp) - tahead
     Q1 = np.zeros([0, 2])
@@ -47,12 +65,27 @@ def nearest_neighbours(recsp, tauS = 1, tauL = 50, eps_tol = 0.001, nst = 0, ned
     """
     returns list of nearest neighbours for each point in the attractor
     
-    tauS: initial relative time
-    tauL: final relative time
-    eps_tol: tolerance level to define nearest neighbours
-    nst: starting index for testing, PYTHON INDEX BEGINS AT 0!
-    ned: ending index for testing, -1 because of 0 indexing!
-    theiler_window: use a Theiler window to prevent autocorrelation error
+    Inputs
+    ------
+    recsp: np.array
+        reconstructed attractor
+    tauS: int
+        initial relative time
+    tauL: int
+        final relative time
+    eps_tol: float
+        tolerance level to define nearest neighbours
+    nst: int
+        starting index for testing, PYTHON INDEX BEGINS AT 0!
+    ned: int
+        ending index for testing, -1 because of 0 indexing!
+    theiler_window: int
+        use a Theiler window to prevent autocorrelation error
+        
+    Returns
+    -------
+    EPNb: np.array
+        list of nearest neighbours for each point in the reconstructed attractor
     """
     N = range(nst, ned + 1, 1)
     EPNb = [] # list to hold the results
@@ -82,12 +115,27 @@ def Stau(recsp, EPNb, tauS = 1, tauL = 50, nst = 0, ned = 999):
     Physics Letters A, Volume 185, Issue 1, Pages 77-87, 1994.
     The gradient of S vs. Tau provides the maximal Lyapunov exponent for an orbit.
     
-    recsp: reconstructed attractor
-    EPBn: list of nearest neighbours
-    tauS: starting time delay
-    tauL: endinf time delay
-    nst: start index
-    ned: end index    
+    Inputs
+    ------
+    recsp: np.array
+        reconstructed attractor
+    EPBn: np.array
+        list of nearest neighbours
+    tauS: int
+        starting time delay
+    tauL: int
+        ending time delay
+    nst: int
+        start index
+    ned: int
+        end index
+    
+    Returns
+    -------
+    x: np.array
+        time delay
+    y: np.array
+        stretching factor. The linear portion of dlog(y)/dlog(x) gives the estimate of the  maximal Lyapunov exponent
     """
     N = range(nst, ned + 1, 1)
     StauTbl = np.zeros([0, 2])
@@ -130,8 +178,17 @@ def grassberger_procaccia(r, recsp):
     Peter Grassberger and Itamar Procaccia (1983). 
     "Measuring the Strangeness of Strange Attractors". Physica D: Nonlinear Phenomena. 9 (1‒2): 189‒208.
     
-    r: distance in N dimensional space
-    recsp: reconstructed attractor
+    Input
+    -----
+    r: float
+        distance in N dimensional space
+    recsp: np.array
+        reconstructed attractor
+    
+    Returns
+    -------
+    float
+        Correlation value of Peter Grassberger and Itamar Procaccia (1983).
     """
     [nmax, dd] = np.shape(recsp)
     LL = np.zeros([nmax,nmax])
@@ -159,10 +216,24 @@ def calc_corr_dim(recsp, r0, r1, Nr):
     Using a given range of distances, calculate the correlation dimension
     using the Grassberger Procaccia algorithm.
     
-    recsp: reconstructed attractor
-    r0: starting distance in N dimensional space
-    r1: ending distance in N dimensional space
-    Nr: number of distances to test between r0 and r1
+    Inputs
+    ------
+    recsp: np.array
+        reconstructed attractor
+    r0: float
+        starting distance in N dimensional space
+    r1: float
+        ending distance in N dimensional space
+    Nr: int
+        number of distances to test between r0 and r1
+        
+    Returns
+    -------
+    r: np.array
+        np.array of distances used
+    C: np.array
+        np.array of correlation values of Peter Grassberger and Itamar Procaccia (1983).
+        The linear portion of dlog(C)/dlog(r) gives an estimate of the correlation dimension.
     """
     r = np.linspace(r0, r1, Nr)
     C = np.zeros(len(r))
