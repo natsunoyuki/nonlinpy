@@ -7,9 +7,12 @@ def recon_sp(tauI, dm, data):
     This function reconstructs the attractor of a time series through 
     time delay embedding
     
-    tauI: number of time delay steps to use
-    dm: number of embedding dimensions
-    data: original 1 dimensional time series data
+    tauI: int 
+        number of time delay steps to use
+    dm: int
+        number of embedding dimensions
+    data: np.array
+        np.array of the original 1 dimensional time series data
     """
     Nmax = len(data) - (dm - 1) * tauI
     v = np.zeros([Nmax, dm])
@@ -27,9 +30,12 @@ def cao_coefficients(tauI, dm, xlist):
     determining the embedding dimension
     L Cao, Physica D 110 (1997) 43-50
     
-    tauI: time delay
-    dm: number of embedding dimensions
-    xlist: original time series data
+    tauI: int
+        time delay step size
+    dm: int
+        number of embedding dimensions
+    xlist: np.array
+        original time series data
     """
     recM0 = recon_sp(tauI, dm, xlist)
     recM1 = recon_sp(tauI, dm + 1, xlist)
@@ -80,9 +86,12 @@ def cao_coefficients(tauI, dm, xlist):
 
 def calc_cao_coeff(data, tau = 50, length = 10):
     """
-    data: original time series
-    tau: time delay used
-    length: number of dimensions to test for
+    data: np.array
+        original time series
+    tau: int
+        time delay used
+    length: int
+        number of dimensions to test for
     """
     CE = np.zeros(length)
     CEAST = np.zeros(length)
