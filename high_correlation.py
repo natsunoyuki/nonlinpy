@@ -13,12 +13,19 @@ def MultMoment(tauI,mulist,xlist):
     """
     A M Albano, A Passamante, M E Farrell, Physica D 54 (1991) 85-97
     
+    Inputs
+    ------
     tauI: int
         time delay step
     mul: list
         Albano et al. mu value list
     xlist: np.array
-        nonlinear time series array    
+        nonlinear time series array  
+        
+    Returns
+    -------
+    mulmo: float
+        Albano et al. high order auto correlation value for tauI
     """
     avx = np.mean(xlist) #mean of data
     xdouble = np.power(xlist, 2) #data squared
