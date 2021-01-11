@@ -89,7 +89,7 @@ def plot_orbit_diagram(R, Z):
     Z: np.array
         one of the 3 dimensions of the system to plot.
     """
-    plt.figure(figsize = (15, 5))
+    plt.figure(figsize = (10, 10))
     for i in range(len(R)):
         plt.plot(R[i] * np.ones(len(Z[i])), Z[i], 'k.', markersize=1)
     plt.grid(True)
@@ -147,7 +147,8 @@ def demo():
         return xdot
 
     # range of parameter values to vary:
-    R = np.arange(10*10**6, 35*10**6, 10**5)
+    dR = 10**5 / 2
+    R = np.arange(10*10**6, 30*10**6 + dR, dR)
     # time steps to try:
     t = np.arange(0, 20, 0.001)
     # initial conditions:
