@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-from scipy import optimize
 from scipy import integrate
 
 def make_orbit_diagram(xdot_fun, x0, t, R):
@@ -42,25 +41,39 @@ def make_orbit_diagram(xdot_fun, x0, t, R):
         x = a[start_index:, 0]
         y = a[start_index:, 1]
         z = a[start_index:, 2]
-        X0 = []
-        Y0 = []
-        Z0 = []
 
-        # as we evaluate the maximum using 5 points, 
-        # we leave out the first 2 and last 2 elements
+        X_max = []
+        Y_max = []
+        Z_max = []
+        X_min = []
+        Y_min = []
+        Z_min = []
+
+        # as we evaluate the local maximum and minimum using 5 points, 
+        # we leave out the first and last 2 elements
         for count in range(2, len(z)-2, 1):
-            # for each index, check if x[count] is the local maximum, and update 
-            # the previous and current values for all 3 variables
+            # for each index, check if x[count] is the local maximum/minimum, 
+            # and update the previous and current values for all 3 variables
             if x[count-2] < x[count-1] < x[count] > x[count+1] > x[count+2]:
-                X0.append(x[count])
+                X_max.append(x[count])
+            if x[count-2] > x[count-1] > x[count] < x[count+1] < x[count+2]:
+                X_min.append(x[count])
             if y[count-2] < y[count-1] < y[count] > y[count+1] > y[count+2]:
-                Y0.append(y[count])
+                Y_max.append(y[count])
+            if y[count-2] > y[count-1] > y[count] < y[count+1] < y[count+2]:
+                Y_min.append(y[count])
             if z[count-2] < z[count-1] < z[count] > z[count+1] > z[count+2]:
-                Z0.append(z[count])
+                Z_max.append(z[count])
+            if z[count-2] > z[count-1] > z[count] < z[count+1] < z[count+2]:
+                Z_min.append(z[count])
 
-        X.append(X0)
-        Y.append(Y0) 
-        Z.append(Z0)
+        X_max = X_max + X_min
+        Y_max = Y_max + Y_min
+        Z_max = Z_max + Z_min
+
+        X.append(X_max)
+        Y.append(Y_max) 
+        Z.append(Z_max)
 
     return X, Y, Z
 
@@ -114,7 +127,7 @@ def demo():
             np.array of [x_dot, y_dot, z_dot] of ODE variables
         """
         k = 600*10**6
-        M = (3*10**5)*1
+        M = (3*10**5) * 1
         rho = 2500
         eta = 50
         p2 = 0.1*10**6 
