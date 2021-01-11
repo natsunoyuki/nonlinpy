@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from scipy import optimize
 from scipy import integrate
 
 def make_orbit_diagram(xdot_fun, x0, t, R):
@@ -127,7 +128,7 @@ def demo():
             np.array of [x_dot, y_dot, z_dot] of ODE variables
         """
         k = 600*10**6
-        M = (3*10**5) * 1
+        M = (3*10**5) * 0
         rho = 2500
         eta = 50
         p2 = 0.1*10**6 
@@ -153,4 +154,4 @@ def demo():
     x0 = np.array([0, 1.02, 0])
 
     X, Y, Z = make_orbit_diagram(xdot_fun, x0, t, R)
-    plot_orbit_diagram(R, Z)
+    plot_orbit_diagram(R, Y)
