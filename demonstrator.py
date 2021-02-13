@@ -2,11 +2,9 @@ import numpy as np
 import time
 import matplotlib.pyplot as plt
 
-from .reconstructor import recon_sp
-from .measure import mean_attractor_radius
-from .measure import calc_corr_dim
-from .measure import nearest_neighbours, Stau
-from .attractor import logistic_map_attractor
+from reconstructor import recon_sp
+from measure import calc_corr_dim, mean_attractor_radius, nearest_neighbours, Stau
+from attractor import logistic_map_attractor
 
 # This script contains several demonstrators on how to perform nonlinear
 # time series analysis
@@ -64,12 +62,12 @@ def lyapunov_demonstration():
     print("Calculating S...")
     x, y = Stau(recsp, EPNb, tauS = 1, tauL = 20, nst = 0, ned = 999)
 
-    m = np.polyfit(x[0:10], y[0:10], 1)
+    m = np.polyfit(x[0: 10], y[0: 10], 1)
     print("Estimated maximal Lyapunov exponent: {}".format(m[0]))
 
     print("Time taken for computation: {:.3f} s".format(time.time() - STARTTIME))
 
-    plt.figure(figsize=(10,5))
+    plt.figure(figsize=(15, 5))
     plt.plot(x, y, '-o')
     plt.xlabel('Tau')
     plt.ylabel('S(Tau)')

@@ -1,9 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import time
-from scipy import optimize
-from scipy import integrate
 import pandas as pd
+from scipy import integrate
+import time
 
 def make_orbit_diagram(xdot_fun, x0, t, R, return_bins = False):
     """
