@@ -191,11 +191,7 @@ def grassberger_procaccia(r, recsp):
         Correlation value of Peter Grassberger and Itamar Procaccia (1983).
     """
     [nmax, dd] = np.shape(recsp)
-    LL = np.zeros([nmax,nmax])
-    
-    for i in range(nmax):
-        for j in range(nmax):
-            LL[i, j] = linalg.norm(recsp[i, :] - recsp[j, :])
+    LL = make_diff_matrix(recsp)
             
     NN = np.zeros(nmax)
     
@@ -210,6 +206,44 @@ def grassberger_procaccia(r, recsp):
         NN[i] = k
         
     return np.sum(NN) * 2 / nmax ** 2
+
+def make_diff_matrix(recsp):
+    """
+    Makes a matrix containing the normed differences between all data points in a time series.
+    
+    Inputs
+    ------
+    recsp: np.array
+        reconstructed attractor
+    
+    Returns
+    -------
+    LL: np.array
+        difference matrix
+    """
+    [nmax, dd] = np.shape(recsp)
+    L = np.zeros([nmax, nmax])
+    
+    for i in range(nmax):
+        for j in range(i + 1, nmax):
+            L[i, j] = np.linalg.norm(recsp[i, :] - recsp[j, :])
+    return L + L.T
+
+def get_range(x):
+    """
+    Gets the difference between the max and min absolute points in a time series.
+    
+    Inputs
+    ------
+    x: np.array
+        time series
+        
+    Returns
+    -------
+    range: float
+        difference between the max and min absolute points in x
+    """
+    return np.max(np.abs(x)) - np.min(np.abs(x))
 
 def calc_corr_dim(recsp, r0, r1, Nr):
     """
