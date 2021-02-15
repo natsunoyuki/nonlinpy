@@ -1,7 +1,12 @@
 # nonlinpy/__init__.py
 
-# attractor.py: contains several well known attractors.
-# demonstrator.py: contains several demonstrations correlation dimension and Lyapunov exponent calculations.
+# Jupyter notebooks
+# -----------------
+# demonstrations.ipynb: demonstrations on how to use the functions in nonlinpy.
+
+# Python files
+# ------------
+# attractors.py: contains several well known attractors.
 # high_correlation.py: contains functions to calculate the higher order auto correlations of a time series.
 # measure.py: contains the functions used in nonlinear time series analysis to perform measurements on the reconstructed attractor.
 # observability.py: measures the observability of an ODE system.
