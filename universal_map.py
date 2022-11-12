@@ -2,9 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import integrate
 
-def universal_map(x, y, z):
+def return_map(x, y, z):
     """
-    Creates the universal map for the ODE system in x, y and z.
+    Creates the return map for the ODE system in x, y and z.
 
     Inputs
     ------
@@ -14,7 +14,7 @@ def universal_map(x, y, z):
     Returns
     -------
     X0, Y0, Z0: np.array
-        universal map corresponding to x, y and z.
+        return map corresponding to x, y and z.
     """
     X0 = []
     Y0 = []
@@ -43,7 +43,7 @@ def universal_map(x, y, z):
 
     return np.array(X0), np.array(Y0), np.array(Z0)
 
-def plot_universal_map(X0, Y0, Z0):
+def plot_return_map(X0, Y0, Z0):
     plt.figure(figsize = (15, 5))
     plt.subplot(1,3,1)
     plt.plot(X0[0:len(X0)-1], X0[1:len(X0)], 'k.')
@@ -82,5 +82,5 @@ def demo():
     y = v[int(n/2):, 1]
     z = v[int(n/2):, 2]
 
-    X0, Y0, Z0 = universal_map(x, y, z)
-    plot_universal_map(X0, Y0, Z0)
+    X0, Y0, Z0 = return_map(x, y, z)
+    plot_return_map(X0, Y0, Z0)
