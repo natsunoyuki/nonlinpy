@@ -14,4 +14,4 @@
 # poincare_map.py: creates the Poincare map of an ODE system.
 # power_series_inversion.py: contains functions used for performing power series inversion of an ODE system.
 # reconstructor.py: contains functions to reconstruct a topologically equivalent attractor from a single time series.
-# universal_map.py: creates the universal map of an ODE system.
+# return_map.py: creates the return map of an ODE system.
